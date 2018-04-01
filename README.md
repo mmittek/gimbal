@@ -6,6 +6,7 @@ Poorly documented attempt to build an inexpensive 3-axis gimbal using STM32FX uC
 Demo available here: https://www.youtube.com/watch?v=dBaz5YtMMdg
 
 ## Features
+- STM32F100 running at 24Mhz
 - Eclipse Makefile project
 - Pins defined and configuration managed using STM32CubeMX (http://www.st.com/en/development-tools/stm32cubemx.html)
 - IMU sampled at 100Hz using Invense's API
