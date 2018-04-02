@@ -150,6 +150,10 @@ void mpu9250_mpu_sampling(mpu9250_t *p_mpu9250) {
 	            unsigned long sensor_timestamp;
 	do {
 		if(mpu_read_fifo(gyro, accel_short, &sensor_timestamp, &sensors, &more)) {
+			// Little safety feature to report if it's impossible to read fifo!
+			if(p_mpu9250->fault_handler != NULL) {
+				p_mpu9250->fault_handler(p_mpu9250, MPU9250_FAULT_UNABLE_TO_READ_FIFO);
+			}
 			break;
 		}
 		ComplementaryFilter(p_mpu9250, sensors, accel_short, gyro, 1.0f/(float)DEFAULT_MPU_HZ);
@@ -231,8 +235,9 @@ int mpu9250_init(mpu9250_t *p_mpu9250, mpu9250_conf_t *p_mpu9250_conf) {
 
     // Set the struct values here
     memset(p_mpu9250, 0, sizeof(p_mpu9250));
-    p_mpu9250->empl_data_handler = p_mpu9250_conf->empl_data_handler;
-    p_mpu9250->euler_handler = p_mpu9250_conf->euler_handler;
+    p_mpu9250->empl_data_handler 		= p_mpu9250_conf->empl_data_handler;
+    p_mpu9250->euler_handler 			= p_mpu9250_conf->euler_handler;
+    p_mpu9250->fault_handler 			= p_mpu9250_conf->fault_handler;
 
 	result += mpu_init(NULL);
 //	result += inv_init_mpl();

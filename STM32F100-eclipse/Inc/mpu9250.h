@@ -22,6 +22,11 @@ typedef enum {
 }mpu9250_empl_data_type_t;
 
 
+typedef enum {
+	MPU9250_FAULT_ERROR,
+	MPU9250_FAULT_UNABLE_TO_READ_FIFO,
+}mpu9250_fault_type_t;
+
 #define COMPASS_ENABLED 1
 #define DEFAULT_MPU_HZ  (100)
 #define COMPASS_READ_MS (100)
@@ -36,6 +41,7 @@ typedef struct mpu9250_conf_s mpu9250_conf_t;
 typedef void (*mpu9250_empl_data_handler_t)(mpu9250_t* p_mpu9250, mpu9250_empl_data_type_t type, long *data, unsigned long timestamp);
 
 typedef void (*mpu9250_euler_handler_t)(mpu9250_t* p_mpu9250, float pitch, float roll, float yaw);
+typedef void (*mpu9250_fault_handler_t)(mpu9250_t* p_mpu9250, mpu9250_fault_type_t fault);
 
 struct mpu9250_s{
 	unsigned short					accel_sens;
@@ -45,12 +51,14 @@ struct mpu9250_s{
 	float 							yaw;
 	mpu9250_empl_data_handler_t 	empl_data_handler;
 	mpu9250_euler_handler_t			euler_handler;
+	mpu9250_fault_handler_t			fault_handler;
 	uint32_t 						num_samples;
 };
 
 struct mpu9250_conf_s{
 	mpu9250_empl_data_handler_t 	empl_data_handler;
 	mpu9250_euler_handler_t			euler_handler;
+	mpu9250_fault_handler_t			fault_handler;
 };
 
 

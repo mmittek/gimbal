@@ -101,7 +101,14 @@ void mpu9250_euler_handler(mpu9250_t* p_mpu9250, float pitch, float roll, float 
 	motor_go(&m_pitch_motor, (int)pitch_speed, fabs(pitch_speed)/180.0f);
 }
 
+void mpu9250_fault_handler(mpu9250_t* p_mpu9250, mpu9250_fault_type_t fault) {
+	motor_stop(&m_roll_motor);
+	motor_stop(&m_pitch_motor);
+	char buf[64];
+	sprintf(buf, "IMU ERROR: %d\r\n", fault);
+	HAL_USART_Transmit(&husart1, buf, strlen(buf), 1000);
 
+}
 
 /* USER CODE END 0 */
 
@@ -147,9 +154,12 @@ int main(void)
   char buf[64];
 
 
+  HAL_Delay(100);
+
   mpu9250_conf_t mpu9250_conf;
-  mpu9250_conf.empl_data_handler =mpu9250_empl_data_handler;
-  mpu9250_conf.euler_handler = mpu9250_euler_handler;
+  mpu9250_conf.empl_data_handler 	=mpu9250_empl_data_handler;
+  mpu9250_conf.euler_handler 		= mpu9250_euler_handler;
+  mpu9250_conf.fault_handler 		= mpu9250_fault_handler;
   mpu9250_init(&m_mpu9250, &mpu9250_conf);
 
   /* USER CODE END 2 */
