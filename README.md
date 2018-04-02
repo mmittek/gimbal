@@ -24,3 +24,4 @@ Demo available here: https://www.youtube.com/watch?v=dBaz5YtMMdg
 
 ## References
 - L298N Solid Works model taken from https://grabcad.com/library/driver-l298n-1
+- GY6050/GY9250 Solid Works model taken from https://grabcad.com/library/mpu-92-65-1
