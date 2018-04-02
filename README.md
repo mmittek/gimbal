@@ -21,3 +21,6 @@ Demo available here: https://www.youtube.com/watch?v=dBaz5YtMMdg
 - Inexpensive JGY-371 motors readily available on eBay (https://media.digikey.com/pdf/Data%20Sheets/Seeed%20Technology/108990007_Web.pdf)
 - Some 3D-printed parts for the assembly
 - L298N motor control boards readily available online (https://www.amazon.com/DROK-Controller-H-Bridge-Mega2560-Duemilanove/dp/B00CAG6GX2)
+
+## References
+- L298N Solid Works model taken from https://grabcad.com/library/driver-l298n-1
