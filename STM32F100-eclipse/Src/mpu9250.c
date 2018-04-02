@@ -116,12 +116,7 @@ void ComplementaryFilter(mpu9250_t* p_mpu9250, uint8_t sensors, short accData[3]
 		p_mpu9250->yaw += ((float)gyrData[2] / p_mpu9250->gyro_sens) * dt;    // Angle around the Z-axis
     }
 
-    // Compensate for drift with accelerometer data if !bullshit
-    // Sensitivity = -2 to 2 G at 16Bit -> 2G = 32768 && 0.5G = 8192
-    int forceMagnitudeApprox = abs(accData[0]) + abs(accData[1]) + abs(accData[2]);
-    if(sensors & INV_XYZ_ACCEL)
-//    if (forceMagnitudeApprox > 8192 && forceMagnitudeApprox < 32768)
-    {
+    if(sensors & INV_XYZ_ACCEL) {
 	// Turning around the X axis results in a vector on the Y-axis
         pitchAcc = atan2f((float)accData[1], (float)accData[2]) * 180 / M_PI;
         p_mpu9250->pitch = p_mpu9250->pitch * alpha + pitchAcc * (1.0f-alpha);
@@ -130,12 +125,16 @@ void ComplementaryFilter(mpu9250_t* p_mpu9250, uint8_t sensors, short accData[3]
         rollAcc = atan2f((float)accData[0], (float)accData[2]) * 180 / M_PI;
         p_mpu9250->roll = p_mpu9250->roll * alpha + rollAcc * (1.0f-alpha);
     }
-/*
+
+    // Correct the angles
+    /*
     while(p_mpu9250->roll > 360) p_mpu9250->roll -= 360;
     while(p_mpu9250->pitch > 360) p_mpu9250->pitch -= 360;
     while(p_mpu9250->roll < 0) p_mpu9250->roll += 360;
     while(p_mpu9250->pitch < 0) p_mpu9250->pitch += 360;
-*/
+    */
+    while(p_mpu9250->yaw < 0) p_mpu9250->yaw += 360;
+    while(p_mpu9250->yaw > 0) p_mpu9250->yaw -= 360;
 }
 
 

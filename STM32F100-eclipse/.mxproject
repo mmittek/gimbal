@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=C:/Users/Mateusz Mittek/Desktop/cubeProject/Inc
+HeaderPath=D:/GitHub/gimbal/STM32F100-eclipse/Inc
 HeaderFiles=stm32f1xx_it.h;stm32f1xx_hal_conf.h;main.h;
-SourcePath=C:/Users/Mateusz Mittek/Desktop/cubeProject/Src
+SourcePath=D:/GitHub/gimbal/STM32F100-eclipse/Src
 SourceFiles=stm32f1xx_it.c;stm32f1xx_hal_msp.c;main.c;
 
 [PreviousLibFiles]
