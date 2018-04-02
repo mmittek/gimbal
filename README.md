@@ -3,7 +3,9 @@ Poorly documented attempt to build an inexpensive 3-axis gimbal using STM32FX uC
 
 ![alt text](https://github.com/mmittek/gimbal/blob/master/images/3-axis.jpg?raw=true "Single axis assembly")
 
-Demo available here: https://www.youtube.com/watch?v=dBaz5YtMMdg
+1-axis demo: https://www.youtube.com/watch?v=dBaz5YtMMdg
+
+2-axis demo: https://www.youtube.com/watch?v=Pzl1FiPx8YI
 
 ## Features
 - STM32F100 running at 24Mhz
