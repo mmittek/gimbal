@@ -100,6 +100,7 @@ volatile float pitch_speed = 0.0f;
 void mpu9250_euler_handler(mpu9250_t* p_mpu9250, float pitch, float roll, float yaw) {
 	roll_speed = PID_feed(&m_roll_PID, roll);
 	pitch_speed = PID_feed(&m_pitch_PID, pitch);
+
 	motor_go(&m_roll_motor, (int)roll_speed, fabs(roll_speed)/180.0f);
 	motor_go(&m_pitch_motor, (int)pitch_speed, fabs(pitch_speed)/180.0f);
 }
@@ -164,6 +165,11 @@ int main(void)
   mpu9250_conf.empl_data_handler 	=mpu9250_empl_data_handler;
   mpu9250_conf.euler_handler 		= mpu9250_euler_handler;
   mpu9250_conf.fault_handler 		= mpu9250_fault_handler;
+
+  // Gyro bias obtained empirically on Apr 2 2018
+  mpu9250_conf.gyro_bias[0] 		= 0;
+  mpu9250_conf.gyro_bias[1] 		= 0;
+  mpu9250_conf.gyro_bias[2] 		= 0;
   mpu9250_init(&m_mpu9250, &mpu9250_conf);
 
   /* USER CODE END 2 */

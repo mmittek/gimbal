@@ -111,9 +111,9 @@ void ComplementaryFilter(mpu9250_t* p_mpu9250, uint8_t sensors, short accData[3]
 
     // Integrate the gyroscope data -> int(angularSpeed) = angle
     if(sensors & INV_XYZ_GYRO) {
-		p_mpu9250->pitch += ((float)gyrData[0] /  p_mpu9250->gyro_sens) * dt; // Angle around the X-axis
-		p_mpu9250->roll -= ((float)gyrData[1] /  p_mpu9250->gyro_sens) * dt;    // Angle around the Y-axis
-		p_mpu9250->yaw += ((float)gyrData[2] / p_mpu9250->gyro_sens) * dt;    // Angle around the Z-axis
+		p_mpu9250->pitch += (((float)gyrData[0]-p_mpu9250->gyro_bias[0]) /  p_mpu9250->gyro_sens) * dt; // Angle around the X-axis
+		p_mpu9250->roll -= (((float)gyrData[1]-p_mpu9250->gyro_bias[1]) /  p_mpu9250->gyro_sens) * dt;    // Angle around the Y-axis
+		p_mpu9250->yaw += (((float)gyrData[2]-p_mpu9250->gyro_bias[2]) / p_mpu9250->gyro_sens) * dt;    // Angle around the Z-axis
     }
 
     if(sensors & INV_XYZ_ACCEL) {
@@ -133,8 +133,6 @@ void ComplementaryFilter(mpu9250_t* p_mpu9250, uint8_t sensors, short accData[3]
     while(p_mpu9250->roll < 0) p_mpu9250->roll += 360;
     while(p_mpu9250->pitch < 0) p_mpu9250->pitch += 360;
     */
-    while(p_mpu9250->yaw < 0) p_mpu9250->yaw += 360;
-    while(p_mpu9250->yaw > 0) p_mpu9250->yaw -= 360;
 }
 
 
@@ -237,6 +235,9 @@ int mpu9250_init(mpu9250_t *p_mpu9250, mpu9250_conf_t *p_mpu9250_conf) {
     p_mpu9250->empl_data_handler 		= p_mpu9250_conf->empl_data_handler;
     p_mpu9250->euler_handler 			= p_mpu9250_conf->euler_handler;
     p_mpu9250->fault_handler 			= p_mpu9250_conf->fault_handler;
+    for(int i=0; i<3; i++) {
+    	p_mpu9250->gyro_bias[i]			= p_mpu9250_conf->gyro_bias[i];
+    }
 
 	result += mpu_init(NULL);
 //	result += inv_init_mpl();

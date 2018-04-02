@@ -48,6 +48,7 @@ struct mpu9250_s{
 	float 							gyro_sens;
 	float							pitch;
 	float 							roll;
+	float							gyro_bias[3];
 	float 							yaw;
 	mpu9250_empl_data_handler_t 	empl_data_handler;
 	mpu9250_euler_handler_t			euler_handler;
@@ -59,6 +60,7 @@ struct mpu9250_conf_s{
 	mpu9250_empl_data_handler_t 	empl_data_handler;
 	mpu9250_euler_handler_t			euler_handler;
 	mpu9250_fault_handler_t			fault_handler;
+	float							gyro_bias[3];
 };
 
 
