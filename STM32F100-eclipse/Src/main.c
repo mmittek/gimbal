@@ -130,7 +130,9 @@ int main(void)
   /* MCU Configuration----------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+
+
+	HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -152,8 +154,14 @@ int main(void)
   /* USER CODE BEGIN 2 */
   i2c_set_instance(&hi2c1);
 
-  PID_init(&m_roll_PID, 12.0f, 0, 1.0f);
-  PID_init(&m_pitch_PID, 16.0f, 0, 4.0f);
+  PID_init(&m_roll_PID, 12.0f, 0.0001, 1.0f);
+  PID_init(&m_pitch_PID, 16.0f, 0.0001, 4.0f);
+//    PID_init(&m_roll_PID, 16.0f, 0.0001, 4.0f);
+//    PID_init(&m_pitch_PID, 32.0f, 0.0001, 16.0f);
+
+  PID_setpoint(&m_roll_PID, 0, 2);
+  PID_setpoint(&m_pitch_PID, 0, 2);
+
   motor_init(&m_roll_motor, GPIOC, GPIO_PIN_9, GPIOC, GPIO_PIN_7, &htim16, TIM_CHANNEL_1);
   motor_init(&m_pitch_motor, GPIOC, GPIO_PIN_8, GPIOC, GPIO_PIN_6, &htim17, TIM_CHANNEL_1);
   char buf[64];

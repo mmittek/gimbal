@@ -12,12 +12,13 @@ typedef struct {
 	float kI;
 	float kD;
 	float setpoint;
+	float hysteresis;
 }PID_t;
 
 
 void PID_init(PID_t *p_PID, float kP, float kI, float kD);
 float PID_feed(PID_t *p_PID, float x);
-void PID_setpoint(PID_t *p_PID, float setpoint);
+void PID_setpoint(PID_t *p_PID, float setpoint, float hysteresis);
 
 
 
